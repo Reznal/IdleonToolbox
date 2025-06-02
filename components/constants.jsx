@@ -219,6 +219,9 @@ export const PAGES = {
     },
     'guaranteedDropCalculator': {
       icon: 'data/TreeInterior1b'
+    },
+    'gearLoadouts': {
+      icon: 'data/EquipmentWeapons1'
     }
   }
 }
