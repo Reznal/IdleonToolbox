@@ -29,64 +29,7 @@ import styled from '@emotion/styled';
 import { prefix } from '@utility/helpers';
 import Tooltip from '@components/Tooltip';
 import ItemDisplay from '@components/common/ItemDisplay';
-
-// Function to check if an item matches a slot type
-const isItemValidForSlot = (item, slotType) => {
-  if (!item || item.rawName === 'Blank') return true;
-  
-  const itemType = item.Type || '';
-  
-  switch (slotType) {
-    case 'helmet':
-      return itemType === 'HELMET';
-    case 'premium-helmet':
-      return itemType === 'PREMIUM_HELMET';
-    case 'weapon':
-      return ['SPEAR', 'BOW', 'WAND', 'FISTICUFF', 'SWORD'].includes(itemType);
-    case 'shirt':
-      return itemType === 'SHIRT';
-    case 'attire':
-      return itemType === 'ATTIRE';
-    case 'pendant':
-      return itemType === 'PENDANT';
-    case 'pants':
-      return itemType === 'PANTS';
-    case 'ring':
-      return itemType === 'RING';
-    case 'premium-ring':
-      return itemType === 'CHAT_RING';
-    case 'shoes':
-      return itemType === 'SHOES';
-    case 'keychain':
-      return itemType === 'KEYCHAIN';
-    case 'trophy':
-      return itemType === 'TROPHY';
-    case 'cape':
-      return itemType === 'CAPE';
-    case 'nametag':
-      return itemType === 'NAMETAG';
-    case 'pickaxe':
-      return itemType === 'PICKAXE';
-    case 'hatchet':
-      return itemType === 'HATCHET';
-    case 'fishing-rod':
-      return itemType === 'FISHING_ROD';
-    case 'net':
-      return itemType === 'BUG_CATCHING_NET';
-    case 'trap-box':
-      return itemType === 'TRAP_BOX' || itemType === 'CARRY_BAG';
-    case 'skull':
-      return itemType === 'SKULL' || itemType === 'WORSHIP_SKULL';
-    case 'splicer':
-      return itemType === 'SPLICER' || itemType === 'DNA_GUN';
-    case 'food':
-      return itemType === 'BOOST_FOOD' || itemType === 'FOOD';
-    case 'blank':
-      return true; // Blank slot can hold anything or nothing
-    default:
-      return true;
-  }
-};
+import { isItemValidForSlot } from './itemSlotUtils';
 
 // Function to get item location description
 const getItemLocation = (item) => {
@@ -308,7 +251,7 @@ const GearSlotModal = ({
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
       <DialogTitle>
-        Select {equipmentSlotType ? equipmentSlotType.charAt(0).toUpperCase() + equipmentSlotType.slice(1) : 'Item'} for Slot {slotIndex + 1}
+        Select {equipmentSlotType ? equipmentSlotType.charAt(0).toUpperCase() + equipmentSlotType.slice(1).replace('-', ' ') : 'Item'}
       </DialogTitle>
       
       <DialogContent>

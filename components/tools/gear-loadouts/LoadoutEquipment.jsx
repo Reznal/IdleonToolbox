@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { prefix } from '@utility/helpers';
 import Tooltip from '@components/Tooltip';
 import ItemDisplay from '@components/common/ItemDisplay';
+import { isItemValidForSlot } from './itemSlotUtils';
 
 // Equipment slot type mapping - 32 slots total in 4 pages of 8 slots each (4 rows x 2 columns per page)
 // Page 1 (Equipment): Helmet/Weapon, Shirt/Pendant, Pants/Ring, Shoes/Ring
@@ -51,66 +52,6 @@ const EQUIPMENT_SLOTS = [
   { type: 'food', icon: 'FoodHealth1', name: 'Food' },
   { type: 'food', icon: 'FoodHealth1', name: 'Food' }
 ];
-
-// Function to check if an item matches a slot type
-const isItemValidForSlot = (item, slotType) => {
-  if (!item || item.rawName === 'Blank') return true;
-  
-  const itemName = item.rawName || '';
-  
-  switch (slotType) {
-    case 'helmet':
-      return itemName.includes('EquipmentHats') && !itemName.includes('EquipmentHatsPremium');
-    case 'premium-helmet':
-      return itemName.includes('EquipmentHatsPremium') || (itemName.includes('EquipmentHats') && itemName.includes('Premium'));
-    case 'weapon':
-      return itemName.includes('EquipmentSword') || 
-             itemName.includes('EquipmentBows') || 
-             itemName.includes('EquipmentWands') || 
-             itemName.includes('EquipmentPunching');
-    case 'shirt':
-    case 'attire':
-      return itemName.includes('EquipmentShirts') || itemName.includes('EquipmentArmour');
-    case 'pendant':
-      return itemName.includes('EquipmentPendant');
-    case 'pants':
-      return itemName.includes('EquipmentPants');
-    case 'ring':
-      return itemName.includes('EquipmentRings') && !itemName.includes('EquipmentRingsPremium') && !itemName.includes('Skull');
-    case 'premium-ring':
-      return itemName.includes('EquipmentRingsPremium') || (itemName.includes('EquipmentRings') && itemName.includes('Premium'));
-    case 'shoes':
-      return itemName.includes('EquipmentShoes');
-    case 'keychain':
-      return itemName.includes('EquipmentKeychain');
-    case 'trophy':
-      return itemName.includes('Trophy');
-    case 'cape':
-      return itemName.includes('EquipmentCape');
-    case 'nametag':
-      return itemName.includes('EquipmentNametag');
-    case 'pickaxe':
-      return itemName.includes('EquipmentTools') && (itemName.includes('2') || itemName.includes('3') || itemName.includes('5') || itemName.includes('6') || itemName.includes('12'));
-    case 'hatchet':
-      return itemName.includes('EquipmentToolsHatchet') || itemName.includes('EquipmentTools') && (itemName.includes('Hatchet') || itemName.includes('Axe'));
-    case 'fishing-rod':
-      return itemName.includes('EquipmentTools') && (itemName.includes('7') || itemName.includes('8') || itemName.includes('Rod'));
-    case 'net':
-      return itemName.includes('EquipmentTools11') || (itemName.includes('EquipmentTools') && itemName.includes('Net'));
-    case 'trap-box':
-      return itemName.includes('TrapBoxSet') || itemName.includes('Trap');
-    case 'skull':
-      return itemName.includes('EquipmentRings') && itemName.includes('Skull');
-    case 'splicer':
-      return itemName.includes('EquipmentTools15') || (itemName.includes('EquipmentTools') && itemName.includes('Splicer'));
-    case 'food':
-      return itemName.includes('FoodHealth') || itemName.includes('FoodMana') || itemName.includes('FoodBoost') || itemName.includes('Food');
-    case 'blank':
-      return true; // Blank slot can hold anything or nothing
-    default:
-      return true;
-  }
-};
 
 const LoadoutEquipment = ({ 
   equipment = [], 
